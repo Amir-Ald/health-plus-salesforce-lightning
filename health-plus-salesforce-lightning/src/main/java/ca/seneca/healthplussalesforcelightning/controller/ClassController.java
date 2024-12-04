@@ -60,23 +60,35 @@ public class ClassController {
 
     @PostMapping("/{id}/bookings")
     public ResponseEntity<?> bookClass(@PathVariable Long id, @RequestBody Bookings booking) {
-        Optional<Classes> classEntity = Optional.ofNullable(classService.getClassById(id));
-        if (classEntity.isPresent()) {
-            Bookings savedBooking = classService.bookClass(id, booking);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Class not found");
+        try {
+            Optional<Classes> classEntity = Optional.ofNullable(classService.getClassById(id));
+            if (classEntity.isPresent()) {
+                if (classEntity.get().getCapacity() <= 0) {
+                    return ResponseEntity.badRequest().body("Class is full");
+                }
+                
+                Bookings savedBooking = classService.bookClass(id, booking);
+                return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Class not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}/bookings/{bookingId}")
+    @PutMapping("/bookings/{bookingId}/cancel")
     public ResponseEntity<?> cancelBooking(@PathVariable Long bookingId) {
-        Optional<Bookings> existingBooking = Optional.ofNullable(classService.getBookingById(bookingId));
-        if (existingBooking.isPresent()) {
-            classService.cancelBooking(bookingId);
-            return ResponseEntity.ok().body("Booking cancelled successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Booking not found");
+        try {
+            Optional<Bookings> existingBooking = Optional.ofNullable(classService.getBookingById(bookingId));
+            if (existingBooking.isPresent()) {
+                Bookings updatedBooking = classService.cancelBooking(bookingId);
+                return ResponseEntity.ok(updatedBooking);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Booking not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -84,5 +96,11 @@ public class ClassController {
     public ResponseEntity<List<Classes>> getUpcomingClasses() {
         List<Classes> upcomingClasses = classService.getUpcomingClasses();
         return ResponseEntity.ok(upcomingClasses);
+    }
+
+    @GetMapping("/bookings")
+    public ResponseEntity<List<Bookings>> getAllBookings() {
+        List<Bookings> bookings = classService.getAllBookings();
+        return ResponseEntity.ok(bookings);
     }
 }
