@@ -33,6 +33,6 @@ public class Users {
     private Timestamp createdAt;
 
     public enum Role {
-        Instructor, Admin
+        Instructor, Admin, Staff
     }
 }

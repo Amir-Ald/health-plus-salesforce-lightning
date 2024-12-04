@@ -71,4 +71,10 @@ public class ClassController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Booking not found");
         }
     }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<Classes>> getUpcomingClasses() {
+        List<Classes> upcomingClasses = classService.getUpcomingClasses();
+        return ResponseEntity.ok(upcomingClasses);
+    }
 }

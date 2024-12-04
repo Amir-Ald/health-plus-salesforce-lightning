@@ -1,9 +1,18 @@
 package ca.seneca.healthplussalesforcelightning.model;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.*;
-import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -22,10 +31,10 @@ public class Classes {
     private Users instructor;
 
     @Column(name = "start_time", nullable = false)
-    private Timestamp startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time", nullable = false)
-    private Timestamp endTime;
+    private LocalDateTime endTime;
 
     @Column(nullable = false)
     private int capacity;

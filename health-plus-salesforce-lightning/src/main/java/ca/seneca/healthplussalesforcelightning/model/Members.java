@@ -20,13 +20,11 @@ public class Members {
     @Column(length = 15)
     private String contact;
 
-    @ManyToOne
-    @JoinColumn(name = "membership_plan_id", nullable = false)
-    private MembershipPlans membershipPlan;
+    @Column(name = "membership_plan_id", nullable = false)
+    private Long membershipPlan;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Status status;
+    private String status;
 
     @Column(name = "start_date", nullable = false)
     private Date startDate;
@@ -34,7 +32,4 @@ public class Members {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
-    public enum Status {
-        Active, Inactive
-    }
 }

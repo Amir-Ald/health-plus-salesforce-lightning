@@ -4,7 +4,7 @@ CREATE TABLE sakila.Users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM('Instructor', 'Admin') NOT NULL,
+    role ENUM('Instructor', 'Admin', 'Staff') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE sakila.Members (
     name VARCHAR(100) NOT NULL,
     contact VARCHAR(15),
     membership_plan_id BIGINT UNSIGNED NOT NULL,
-    status ENUM('Active', 'Inactive') NOT NULL,
+    status VARCHAR(15) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     FOREIGN KEY (membership_plan_id) REFERENCES MembershipPlans(id) ON DELETE CASCADE

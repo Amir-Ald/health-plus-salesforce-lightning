@@ -1,11 +1,12 @@
 package ca.seneca.healthplussalesforcelightning.service;
 
-import ca.seneca.healthplussalesforcelightning.model.Members;
-import ca.seneca.healthplussalesforcelightning.repository.MembersRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import ca.seneca.healthplussalesforcelightning.model.Members;
+import ca.seneca.healthplussalesforcelightning.repository.MembersRepository;
 
 @Service
 public class MemberService {
@@ -31,5 +32,9 @@ public class MemberService {
 
     public void deleteMember(Long id) {
         membersRepository.deleteById(id);
+    }
+
+    public List<Members> getActiveMembers() {
+        return membersRepository.findByStatusIgnoreCase("ACTIVE");
     }
 }

@@ -1,13 +1,15 @@
 package ca.seneca.healthplussalesforcelightning.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ca.seneca.healthplussalesforcelightning.model.Bookings;
 import ca.seneca.healthplussalesforcelightning.model.Classes;
 import ca.seneca.healthplussalesforcelightning.repository.BookingsRepository;
 import ca.seneca.healthplussalesforcelightning.repository.ClassesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ClassService {
@@ -49,5 +51,10 @@ public class ClassService {
 
     public Bookings getBookingById(Long bookingId) {
         return bookingsRepository.findById(bookingId).orElse(null);
+    }
+
+    public List<Classes> getUpcomingClasses() {
+        LocalDateTime now = LocalDateTime.now();
+        return classesRepository.findByStartTimeGreaterThanOrderByStartTime(now);
     }
 }

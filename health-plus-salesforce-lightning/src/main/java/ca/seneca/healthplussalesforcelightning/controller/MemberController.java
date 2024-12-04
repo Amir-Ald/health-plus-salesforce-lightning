@@ -59,4 +59,10 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Member not found");
         }
     }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<Members>> getActiveMembers() {
+        List<Members> activeMembers = memberService.getActiveMembers();
+        return ResponseEntity.ok(activeMembers);
+    }
 }
