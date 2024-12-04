@@ -29,7 +29,7 @@ public class AuthController {
         Optional<Users> userOptional = authService.login(email, password);
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
-            String primaryRole = user.getRole().name();
+            String primaryRole = user.getRole();
             
             // Generate a simple token
             String token = UUID.randomUUID().toString();

@@ -1,5 +1,6 @@
 package ca.seneca.healthplussalesforcelightning.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,18 @@ public class MemberService {
 
     public List<Members> getActiveMembers() {
         return membersRepository.findByStatusIgnoreCase("ACTIVE");
+    }
+
+    public List<Members> getInactiveMembers() {
+        return membersRepository.findByStatusIgnoreCase("INACTIVE");
+    }
+
+    public List<Members> getExpiringMemberships() {
+        LocalDate thirtyDaysFromNow = LocalDate.now().plusDays(30);
+        return membersRepository.findByEndDateBetweenAndStatusIgnoreCase(
+            LocalDate.now(), 
+            thirtyDaysFromNow,
+            "ACTIVE"
+        );
     }
 }

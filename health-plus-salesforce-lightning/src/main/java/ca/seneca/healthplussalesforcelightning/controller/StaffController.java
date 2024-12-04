@@ -22,6 +22,12 @@ public class StaffController {
         return ResponseEntity.ok(staff);
     }
 
+    @GetMapping("/instructors")
+    public ResponseEntity<List<Users>> getAllInstructors() {
+        List<Users> instructors = staffService.getAllInstructors();
+        return ResponseEntity.ok(instructors);
+    }
+
     @PostMapping
     public ResponseEntity<Users> addStaff(@RequestBody Users staff) {
         Users savedStaff = staffService.addStaff(staff);

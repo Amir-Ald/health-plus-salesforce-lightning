@@ -32,4 +32,8 @@ public class StaffService {
     public void deleteStaff(Long id) {
         usersRepository.deleteById(id);
     }
+
+    public List<Users> getAllInstructors() {
+        return usersRepository.findByRoleIgnoreCase("INSTRUCTOR");
+    }
 }

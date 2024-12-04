@@ -28,7 +28,7 @@ public class AuthService {
         Optional<Users> userOptional = usersRepository.findById(userId);
         if (userOptional.isPresent()) {
             Users user = userOptional.get();
-            return Optional.of(List.of(user.getRole().name()));
+            return Optional.of(List.of(user.getRole()));
         }
         return Optional.empty();
     }
